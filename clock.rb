@@ -40,4 +40,4 @@ handler do |job|
 
 end
 
-every(10.seconds, 'job_name')
+every(1.minute, 'job_name')
