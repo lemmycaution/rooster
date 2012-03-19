@@ -54,8 +54,8 @@ handler do |job|
         redis.set('since_id',t.id) if i==0
         # increment counter! important
         i+=1
-        # retweet it on target account
-        puts client.update("#{t.text}")
+        # remove #gp and retweet it on target account
+        puts client.update("#{t.text.gsub("#gp","")}")
       end
     end
     
