@@ -8,19 +8,16 @@ include Clockwork
 include Twitter
 include JSON
 
-# load Config
-config = YAML::load( File.open( 'config.yml' ) )
-
 # init REDIS
-uri = URI.parse(config['redis'])
+uri = URI.parse(ENV['REDIS'])
 redis = Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
 
 # Configure Twitter Credentials
 Twitter.configure do |c|
-  c.consumer_key = config['consumer_key']
-  c.consumer_secret = config['consumer_secret']
-  c.oauth_token = config['oauth_token']
-  c.oauth_token_secret = config['oauth_token_secret']
+  c.consumer_key = ENV['CONSUMER_KEY']
+  c.consumer_secret = ENV['CONSUMER_SECRET']
+  c.oauth_token = ENV['OAUTH_TOKEN']
+  c.oauth_token_secret = ENV['OAUTH_TOKEN_SECRET']
 end
 
 # Initialize your Twitter client
@@ -28,11 +25,11 @@ client = Twitter::Client.new
 
 handler do |job|
   # target tag
-  tag = "gp"
+  tag = ENV["TAG"]
   # target user
-  user = "masterlistweet"
+  user = ENV['USER']
   # target feed
-  list = "feed-list"
+  list = ENV['LIST']
   # include entities to checking hashtags
   opts = {:include_entities => true}
   # add since after first fetch to avoid duplicate posting
@@ -54,8 +51,8 @@ handler do |job|
         redis.set('since_id',t.id) if i==0
         # increment counter! important
         i+=1
-        # remove #gp and retweet it on target account
-        puts client.update("#{t.text.gsub("#gp","")}")
+        # remove tag and retweet it on target account
+        puts client.update(t.text.gsub("##{tag}",""))
       end
     end
     
@@ -63,5 +60,5 @@ handler do |job|
 
 end
 
-# do it every minute
-every(25.seconds, 'job_name')
+# do it every 25 seconds
+every(25.seconds, 'clone_tweets')

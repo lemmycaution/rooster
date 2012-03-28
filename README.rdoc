@@ -1,0 +1,15 @@
+=Rooster
+
+a simple clockwork clones tweets in a spesific list into stream of given account
+designed to work on heroku with clock process within cedar stack
+
+==Usage
+create environment variables below
+ CONSUMER_KEY=YOUR_TWITTER_APP_CONSUMER_KEY
+ CONSUMER_SECRET=YOUR_TWITTER_APP_CONSUMER_SECRET
+ OAUTH_TOKEN=538723238-YOUR_TWITTER_APP_OAUTH_TOKEN
+ OAUTH_TOKEN_SECRET=YOUR_TWITTER_APP_OAUTH_TOKEN
+ USER=YOUR_TWITTER_USER_NAME
+ LIST=LIST_TO_WATCH
+ TAG=TAG_TO_WATCH
+ REDIS=YOUR_REDIS_CONNECTION_URL
