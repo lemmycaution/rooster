@@ -9,7 +9,7 @@ include Twitter
 include JSON
 
 # init REDIS
-uri = URI.parse(ENV['REDIS'])
+uri = URI.parse(ENV['REDISTOGO_URL'])
 redis = Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
 
 # Configure Twitter Credentials
@@ -45,6 +45,7 @@ handler do |job|
 
     # dive if it has hashtags
     unless t.attrs["entities"].empty? && t.attrs["entities"]["hashtags"].empty?
+      
       # collect tweets with target hastag
       t.attrs["entities"]["hashtags"].keep_if{|ht| ht["text"]==tag}.each do |gt|
         # save since id
@@ -52,7 +53,8 @@ handler do |job|
         # increment counter! important
         i+=1
         # remove tag and retweet it on target account
-        puts client.update(t.text.gsub("##{tag}",""))
+        client.update(t.text.gsub("##{tag}",""))
+        # puts t.text.gsub("##{tag}","")
       end
     end
     
