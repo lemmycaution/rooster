@@ -47,7 +47,7 @@ handler do |job|
     unless t.attrs["entities"].empty? && t.attrs["entities"]["hashtags"].empty?
       
       # collect tweets with target hastag
-      t.attrs["entities"]["hashtags"].keep_if{|ht| ht["text"]==tag}.each do |gt|
+      t.attrs["entities"]["hashtags"].keep_if{|ht| ht["text"].to_s.downcase! == tag }.each do |gt|
         # save since id
         redis.set('since_id',t.id) if i==0
         # increment counter! important
