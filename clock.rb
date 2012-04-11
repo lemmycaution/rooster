@@ -53,7 +53,7 @@ handler do |job|
         # increment counter! important
         i+=1
         # remove tag and retweet it on target account
-        client.update(t.text.gsub("##{tag}",""))
+        client.update(t.text.gsub("##{ht["text"].to_s}",""))
         # puts t.text.gsub("##{tag}","")
       end
     end
