@@ -47,14 +47,15 @@ handler do |job|
     unless t.attrs["entities"].empty? && t.attrs["entities"]["hashtags"].empty?
       
       # collect tweets with target hastag
-      t.attrs["entities"]["hashtags"].keep_if{|ht| ht["text"].to_s.downcase! == tag }.each do |gt|
+      ht = ""
+      t.attrs["entities"]["hashtags"].keep_if{|ht| (ht = ht["text"].downcase!) == tag }.each do |gt|
         # save since id
         redis.set('since_id',t.id) if i==0
         # increment counter! important
         i+=1
         # remove tag and retweet it on target account
-        client.update(t.text.gsub("##{ht["text"].to_s}",""))
-        # puts t.text.gsub("##{tag}","")
+        client.update(t.text.gsub("##{ht}",""))
+        # puts t.text.gsub("##{ht}","")
       end
     end
     
