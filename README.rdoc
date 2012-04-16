@@ -1,6 +1,14 @@
 =Rooster
 
-a simple clockwork clones tweets in a spesific list into stream of given account. designed to work on heroku with clock process within cedar stack
+Simple system to clone tweets from a specific list and post them to the main account. 
+
+Currently working on @GreenpeaceUK as part of a social media experiment. Details here: http://www.greenpeace.org.uk/blog/about/danger-were-opening-our-twitter-account-lots-people-20120410
+
+Tweeps on a private list can push to @GreenpeaceUK by using #gp in their tweets.
+
+Feel free to use/improve the code!
+
+Designed to work on heroku with clock process within cedar stack.
 
 ==Usage
 rooster needs redis to work, so first add redis-to-go addon into your app then create environment variables below
@@ -14,3 +22,4 @@ rooster needs redis to work, so first add redis-to-go addon into your app then c
 in you heroku app, for example;
  heroku:config add CONSUMER_KEY=YOUR_TWITTER_APP_CONSUMER_KEY
 that's all!
+
